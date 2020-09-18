@@ -1,0 +1,7 @@
+specification identifier_already_defined
+
+float a
+float c
+float c
+
+c = always[1:2](a <= 2)

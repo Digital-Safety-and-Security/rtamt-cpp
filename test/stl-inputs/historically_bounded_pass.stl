@@ -1,0 +1,6 @@
+specification historically_bounded_pass
+
+float a
+float c
+
+c = historically[1:2](a <= 2)

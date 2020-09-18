@@ -1,0 +1,9 @@
+.directory
+.kate-swp
+bin/
+build/
+dist/
+.kdev4/
+.tidy/
+docs/
+.format/

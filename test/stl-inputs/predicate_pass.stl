@@ -1,0 +1,6 @@
+specification predicate_pass
+
+float a
+float c
+
+c = (a <= 2)

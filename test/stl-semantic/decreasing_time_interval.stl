@@ -1,0 +1,10 @@
+
+
+
+specification decreasing_time_interval
+
+
+float b = 2
+float c
+
+c = (a <= 2 until[12 ms :11 us] b > 3)

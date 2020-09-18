@@ -1,0 +1,6 @@
+specification always_bounded_pass
+
+float a
+float c
+
+c = always[1:2](a <= 2)

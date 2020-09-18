@@ -1,0 +1,7 @@
+specification since_bounded_fail
+
+float a
+float b
+float c
+
+c = (a <= 2 since[100:10] b > 3)

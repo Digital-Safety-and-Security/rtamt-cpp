@@ -1,0 +1,6 @@
+specification always_predicate_pass
+
+float a
+float c
+
+c = always(a <= 2)

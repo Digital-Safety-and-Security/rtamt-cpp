@@ -1,0 +1,8 @@
+
+specification const_no_assignment
+
+const float a
+float b
+float c
+
+c = (a <= 2 until[10:11] b > 3)

@@ -1,0 +1,6 @@
+specification always_short_predicate_pass
+
+float a
+float c
+
+c = G(a <= 2)

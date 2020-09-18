@@ -1,0 +1,6 @@
+specification always_eventually_predicate_fail
+
+float a
+float c
+
+c = always(eventually(a <= 2))

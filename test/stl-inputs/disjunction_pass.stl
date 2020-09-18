@@ -1,0 +1,7 @@
+specification disjunction_pass
+
+float a
+float b
+float c
+
+c = (a <= 2 or b > 3)

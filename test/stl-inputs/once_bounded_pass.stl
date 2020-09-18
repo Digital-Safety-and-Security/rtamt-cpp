@@ -1,0 +1,6 @@
+specification once_bounded_pass
+
+float a
+float c
+
+c = once[1:2](a <= 2)

@@ -1,0 +1,7 @@
+specification bounded_response_pass
+
+float a
+float b
+float c
+
+c = always((a <= 2) implies eventually[1:2](b <= 2))

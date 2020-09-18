@@ -1,0 +1,7 @@
+specification implication_pass
+
+float a
+float b
+float c
+
+c = (a <= 2 implies b > 3)

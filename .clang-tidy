@@ -1,0 +1,21 @@
+# We exclude the following checks for the following reasons
+# -google-*,-llvm-*,-fuchsia-*     Project specific coding standards
+# -readability-*     Maybe use autofix to fix later
+# -modernize-use-auto,-hicpp-use-auto,-modernize-return-braced-init-list     We don't want this because it removes all the typenames
+# -cppcoreguidelines-owning-memory     We don't use a GSL
+# -modernize-use-trailing-return-type  Sylistic only
+# -misc-non-private-member-variables-in-classes,-cppcoreguidelines-non-private-member-variables-in-classes  We don't use access functions
+# -readability-make-member-function-const  We don't use const
+# -cppcoreguidelines-init-variables  No need to init variables if they are assigned before use
+# -readability-convert-member-functions-to-static  To be removed in the end (currently not all functions are fully implemented)
+Checks:          '*,-google-*,-llvm-*,-fuchsia-*,-readability-named-parameter,-modernize-use-auto,-hicpp-use-auto,-modernize-return-braced-init-list,-cppcoreguidelines-owning-memory,-modernize-use-trailing-return-type,-misc-non-private-member-variables-in-classes,-cppcoreguidelines-non-private-member-variables-in-classes,-readability-make-member-function-const,-cppcoreguidelines-init-variables,-readability-convert-member-functions-to-static'
+HeaderFilterRegex: .hpp
+WarningsAsErrors: '*'
+AnalyzeTemporaryDtors: false
+FormatStyle:     none
+
+CheckOptions:    
+  - key:             hicpp-special-member-functions.AllowSoleDefaultDtor
+    value:           '1'
+  - key:             cppcoreguidelines-special-member-functions.AllowSoleDefaultDtor
+    value:           '1'    

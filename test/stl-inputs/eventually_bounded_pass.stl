@@ -1,0 +1,6 @@
+specification eventually_bounded_pass
+
+float a
+float c
+
+c = eventually[1:2](a <= 2)

@@ -1,0 +1,9 @@
+
+
+specification build_a_tree
+
+
+float b = 2
+float c
+
+c = (a <= 2 until[10 :11] b > 3)

@@ -1,0 +1,7 @@
+specification since_pass
+
+float a
+float b
+float c
+
+c = (a <= 2 since b > 3)

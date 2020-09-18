@@ -1,0 +1,9 @@
+
+
+specification assignment_decl_incompatible
+
+
+float b = true
+float c
+
+c = (a <= 2 until[10 :11] b > 3)

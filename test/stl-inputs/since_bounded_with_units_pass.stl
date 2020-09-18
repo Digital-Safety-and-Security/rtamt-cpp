@@ -1,0 +1,7 @@
+specification since_bounded_pass
+
+float a
+float b
+float c
+
+c = (a <= 2 since[100ms:3s] b > 3)
