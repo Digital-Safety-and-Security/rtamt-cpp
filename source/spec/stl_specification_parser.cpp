@@ -38,10 +38,6 @@ antlrcpp::Any StlSpecificationParser::visitDeclVariable(StlParser::DeclVariableC
 
   std::string var_name = varDeclCtx->Identifier()->getText();
 
-  if (varDeclCtx->Constant() != nullptr) {
-    throw StlParseException("Constant variable declaration not supported in this version.");
-  }
-
   if (varDeclCtx->ioType() != nullptr) {
     std::string io_type_str(varDeclCtx->ioType()->getText());
     std::string in_str("input");
@@ -63,6 +59,24 @@ antlrcpp::Any StlSpecificationParser::visitDeclVariable(StlParser::DeclVariableC
   return returnVal;
 }
 
+antlrcpp::Any StlSpecificationParser::visitDeclConstant(StlParser::DeclConstantContext* ctx) {
+  antlrcpp::Any returnVal = visitChildren(ctx);
+
+  StlParser::ConstantDeclarationContext* constantDeclCtx = ctx->constantDeclaration();
+
+  std::string const_name = constantDeclCtx->Identifier()->getText();
+
+  if (constantDeclCtx->domainType()->getText() != "float") {
+    throw StlParseException("Only float variables supported in this version.");
+  }
+  
+  double value = std::stod(constantDeclCtx->literal()->getText());
+
+  _spec->declare_const(const_name, rtamt::Type::FLOAT, value);
+  
+  return returnVal;
+}
+
 antlrcpp::Any StlSpecificationParser::visitExprLiteral(grammar::StlParser::ExprLiteralContext* ctx) {
   antlrcpp::Any    returnVal = visitChildren(ctx);
   double           value     = std::stod(ctx->literal()->getText());
@@ -72,10 +86,15 @@ antlrcpp::Any StlSpecificationParser::visitExprLiteral(grammar::StlParser::ExprL
 }
 
 antlrcpp::Any StlSpecificationParser::visitExprId(grammar::StlParser::ExprIdContext* ctx) {
-  antlrcpp::Any    returnVal = visitChildren(ctx);
-  std::string      name      = ctx->getText();
-  StlVariableNode* node      = new StlVariableNode(name, _spec->var_io_type(name));
-  _root                      = node;
+  antlrcpp::Any    returnVal   = visitChildren(ctx);
+  std::string      name        = ctx->getText();
+  StlNode * node       = nullptr;
+  if (_spec->is_var(name)) {
+    node                       = new StlVariableNode(name, _spec->var_io_type(name));
+  } else {
+    node                       = new StlConstantNode(_spec->const_value(name));
+  }
+  _root                        = node;
   return returnVal;
 }
 

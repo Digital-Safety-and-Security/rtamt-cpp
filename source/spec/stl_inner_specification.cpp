@@ -60,15 +60,73 @@ void StlInnerSpecification::declare_const(const std::string& const_name, rtamt::
     throw StlInvalidOperationException("Specification is locked - new constant variables cannot be added.");
   }
 
-  if ((_vars.find(const_name) != _vars.end()) || (_var_type_map.find(const_name) != _var_type_map.end())) {
+  if ((_vars.find(const_name) != _vars.end()) || (_const_type_map.find(const_name) != _const_type_map.end())) {
     std::stringstream ss("Constant variable ");
     ss << const_name << " already defined.\n";
     throw StlInvalidOperationException(ss.str());
   }
 
   _vars.insert(const_name);
+  _const_type_map.insert(std::make_pair(const_name, type));
   _const_val_map.insert(std::make_pair(const_name, value));
 }
+
+void StlInnerSpecification::const_type(const std::string& const_name, rtamt::Type type) {
+  if (_specification_locked) {
+    throw StlInvalidOperationException("Specification is locked - constant variable type cannot be changed.");
+  }
+
+  std::map<std::string, rtamt::Type>::iterator it = _const_type_map.find(const_name);
+  if (it != _const_type_map.end()) {
+    it->second = type;
+  } else {
+    std::stringstream ss("You cannot change the type of constant variable ");
+    ss << const_name << " because it is not defined.\n";
+    throw StlInvalidOperationException(ss.str());
+  }
+}
+
+rtamt::Type StlInnerSpecification::const_type(const std::string& const_name) {
+  return _const_type_map[const_name];
+}
+
+void StlInnerSpecification::const_value(const std::string& const_name, double value) {
+  if (_specification_locked) {
+    throw StlInvalidOperationException("Specification is locked - constant variable value cannot be changed.");
+  }
+
+  std::map<std::string, double>::iterator it = _const_val_map.find(const_name);
+  if (it != _const_val_map.end()) {
+    it->second = value;
+  } else {
+    std::stringstream ss("You cannot change the value of constant variable ");
+    ss << const_name << " because it is not defined.\n";
+    throw StlInvalidOperationException(ss.str());
+  }
+}
+
+bool StlInnerSpecification::is_var(const std::string& name) {
+  std::map<std::string, rtamt::Type>::iterator it = _var_type_map.find(name);
+  if (it != _var_type_map.end()) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool StlInnerSpecification::is_const(const std::string& name) {
+  std::map<std::string, rtamt::Type>::iterator it = _const_type_map.find(name);
+  if (it != _const_type_map.end()) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+double StlInnerSpecification::const_value(const std::string& const_name) {
+  return _const_val_map[const_name];
+}
+
 
 void StlInnerSpecification::var_type(const std::string& var_name, rtamt::Type type) {
   if (_specification_locked) {

@@ -67,7 +67,13 @@ private:
    * Map var names to var io signature     *
    */
   std::map<std::string, rtamt::StlIOType> _var_io_map;
-  
+
+  /**
+   * Map const var names to var types
+   *
+   */
+  std::map<std::string, rtamt::Type> _const_type_map;
+
   /**
    * Map const names to values
    *
@@ -133,6 +139,38 @@ public:
    * @param value
    */
   void declare_const(const std::string& var_name, rtamt::Type type, double value);
+  
+  /**
+   * @brief set the type of an already declared constant
+   *
+   * @param const_name
+   * @param type 
+   */
+  void const_type(const std::string& const_name, rtamt::Type type);
+
+  /**
+   * @brief get the type of a constant variable
+   *
+   * @param const_name
+   * @return constant variable type as a type enum
+   */
+  rtamt::Type const_type(const std::string& const_name);
+  
+  /**
+   * @brief set the value of an already declared constant
+   *
+   * @param const_name
+   * @param value
+   */
+  void const_value(const std::string& const_name, double value);
+
+  /**
+   * @brief get the value of a constant variable
+   *
+   * @param const_name
+   * @return constant variable value (double)
+   */
+  double const_value(const std::string& const_name);
 
   /**
    * @brief set the type of an already declared variable
@@ -149,6 +187,23 @@ public:
    * @return variable type as a string
    */
   rtamt::Type var_type(const std::string& var_name);
+  
+  /**
+   * @brief checks if name is a variable
+   *
+   * @param name
+   * @return true if name is a variable
+   */
+  bool is_var(const std::string& name);
+  
+  /**
+   * @brief checks if name is a constant
+   *
+   * @param name
+   * @return true if name is a constant
+   */
+  bool is_const(const std::string& name);
+  
 
   /**
    * @brief set the input/output type (signature) of a variable

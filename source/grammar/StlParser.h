@@ -33,9 +33,10 @@ public:
   enum {
     RuleStlfile = 0, RuleStlSpecification = 1, RuleSpec = 2, RuleAssertion = 3, 
     RuleDeclaration = 4, RuleAnnotation = 5, RuleAnnotation_type = 6, RuleVariableDeclaration = 7, 
-    RuleAssignment = 8, RuleDomainType = 9, RuleIoType = 10, RuleInterval = 11, 
-    RuleIntervalTime = 12, RuleUnit = 13, RuleTopExpression = 14, RuleExpression = 15, 
-    RuleReal_expression = 16, RuleComparisonOp = 17, RuleLiteral = 18
+    RuleConstantDeclaration = 8, RuleAssignment = 9, RuleDomainType = 10, 
+    RuleIoType = 11, RuleInterval = 12, RuleIntervalTime = 13, RuleUnit = 14, 
+    RuleTopExpression = 15, RuleExpression = 16, RuleReal_expression = 17, 
+    RuleComparisonOp = 18, RuleLiteral = 19
   };
 
   StlParser(antlr4::TokenStream *input);
@@ -56,6 +57,7 @@ public:
   class AnnotationContext;
   class Annotation_typeContext;
   class VariableDeclarationContext;
+  class ConstantDeclarationContext;
   class AssignmentContext;
   class DomainTypeContext;
   class IoTypeContext;
@@ -162,6 +164,15 @@ public:
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
+  class  DeclConstantContext : public DeclarationContext {
+  public:
+    DeclConstantContext(DeclarationContext *ctx);
+
+    ConstantDeclarationContext *constantDeclaration();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
   DeclarationContext* declaration();
 
   class  AnnotationContext : public antlr4::ParserRuleContext {
@@ -213,7 +224,6 @@ public:
     virtual size_t getRuleIndex() const override;
     DomainTypeContext *domainType();
     antlr4::tree::TerminalNode *Identifier();
-    antlr4::tree::TerminalNode *Constant();
     IoTypeContext *ioType();
     AssignmentContext *assignment();
 
@@ -223,6 +233,23 @@ public:
   };
 
   VariableDeclarationContext* variableDeclaration();
+
+  class  ConstantDeclarationContext : public antlr4::ParserRuleContext {
+  public:
+    ConstantDeclarationContext(antlr4::ParserRuleContext *parent, size_t invokingState);
+    virtual size_t getRuleIndex() const override;
+    antlr4::tree::TerminalNode *Constant();
+    DomainTypeContext *domainType();
+    antlr4::tree::TerminalNode *Identifier();
+    antlr4::tree::TerminalNode *EQUAL();
+    LiteralContext *literal();
+
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+   
+  };
+
+  ConstantDeclarationContext* constantDeclaration();
 
   class  AssignmentContext : public antlr4::ParserRuleContext {
   public:
@@ -325,6 +352,16 @@ public:
     IntervalTimeLiteralContext(IntervalTimeContext *ctx);
 
     LiteralContext *literal();
+    UnitContext *unit();
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  ConstantTimeLiteralContext : public IntervalTimeContext {
+  public:
+    ConstantTimeLiteralContext(IntervalTimeContext *ctx);
+
+    antlr4::tree::TerminalNode *Identifier();
     UnitContext *unit();
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;

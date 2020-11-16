@@ -37,6 +37,10 @@ public:
     return visitChildren(ctx);
   }
 
+  virtual antlrcpp::Any visitDeclConstant(StlParser::DeclConstantContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
   virtual antlrcpp::Any visitAnnotation(StlParser::AnnotationContext *ctx) override {
     return visitChildren(ctx);
   }
@@ -46,6 +50,10 @@ public:
   }
 
   virtual antlrcpp::Any visitVariableDeclaration(StlParser::VariableDeclarationContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitConstantDeclaration(StlParser::ConstantDeclarationContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -70,6 +78,10 @@ public:
   }
 
   virtual antlrcpp::Any visitIntervalTimeLiteral(StlParser::IntervalTimeLiteralContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitConstantTimeLiteral(StlParser::ConstantTimeLiteralContext *ctx) override {
     return visitChildren(ctx);
   }
 

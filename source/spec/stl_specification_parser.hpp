@@ -104,6 +104,14 @@ public:
    * @return antlrcpp::Any
    */
   antlrcpp::Any visitDeclVariable(grammar::StlParser::DeclVariableContext* ctx) override;
+  
+  /**exponents
+   * @brief Visit Constant Declaration rule
+   *
+   * @param ctx Context
+   * @return antlrcpp::Any
+   */
+  antlrcpp::Any visitDeclConstant(grammar::StlParser::DeclConstantContext* ctx) override;
 
   /**
    * @brief Visit ExprLiteral (Constant) rule

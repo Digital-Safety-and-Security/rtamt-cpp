@@ -18,7 +18,7 @@ assertion
 
 declaration 
 	: variableDeclaration                                         #declVariable 
-	: constantDeclaration                                         #declConstant;
+	| constantDeclaration                                         #declConstant;
 
 annotation
         : '@' annotation_type ;
@@ -51,7 +51,8 @@ interval
 	: LBRACK intervalTime COLON intervalTime RBRACK ;
 
 intervalTime
-	: literal ( unit )?      #intervalTimeLiteral ;
+	: literal ( unit )?      #intervalTimeLiteral 
+	| Identifier ( unit )?   #constantTimeLiteral ;
 
 unit
     : SEC | MSEC | USEC | NSEC | PSEC ; 

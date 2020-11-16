@@ -30,11 +30,15 @@ public:
 
     virtual antlrcpp::Any visitDeclVariable(StlParser::DeclVariableContext *context) = 0;
 
+    virtual antlrcpp::Any visitDeclConstant(StlParser::DeclConstantContext *context) = 0;
+
     virtual antlrcpp::Any visitAnnotation(StlParser::AnnotationContext *context) = 0;
 
     virtual antlrcpp::Any visitRosTopic(StlParser::RosTopicContext *context) = 0;
 
     virtual antlrcpp::Any visitVariableDeclaration(StlParser::VariableDeclarationContext *context) = 0;
+
+    virtual antlrcpp::Any visitConstantDeclaration(StlParser::ConstantDeclarationContext *context) = 0;
 
     virtual antlrcpp::Any visitAsgnLiteral(StlParser::AsgnLiteralContext *context) = 0;
 
@@ -47,6 +51,8 @@ public:
     virtual antlrcpp::Any visitInterval(StlParser::IntervalContext *context) = 0;
 
     virtual antlrcpp::Any visitIntervalTimeLiteral(StlParser::IntervalTimeLiteralContext *context) = 0;
+
+    virtual antlrcpp::Any visitConstantTimeLiteral(StlParser::ConstantTimeLiteralContext *context) = 0;
 
     virtual antlrcpp::Any visitUnit(StlParser::UnitContext *context) = 0;
 
