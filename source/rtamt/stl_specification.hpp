@@ -163,6 +163,16 @@ public:
   void declare_var(const std::string& var_name, Type type);
 
   /**
+   * @brief declares a new typed constant variable. In this version,
+   * the only supported type is Type::FLOAT.
+   *
+   * @param const_name
+   * @param type (enum Type)
+   * @param value (double)
+   */
+  void declare_const(const std::string& const_name, Type type, double value);
+  
+  /**
    * @brief sets the type of an already declared variable
    *
    * @throw StlInvalidOperationException - when the function is called after parse()

@@ -67,6 +67,13 @@ private:
    * Map var names to var io signature     *
    */
   std::map<std::string, rtamt::StlIOType> _var_io_map;
+  
+  /**
+   * Map const names to values
+   *
+   */
+  std::map<std::string, double> _const_val_map;
+
 
   /**
    * STL semantics     *
@@ -114,9 +121,18 @@ public:
    * @brief declare a new typed variable
    *
    * @param var_name
-   * @param type (string "float", "int" or "long")
+   * @param type 
    */
   void declare_var(const std::string& var_name, rtamt::Type type);
+  
+  /**
+   * @brief declare a new typed constant
+   *
+   * @param const_name
+   * @param type 
+   * @param value
+   */
+  void declare_const(const std::string& var_name, rtamt::Type type, double value);
 
   /**
    * @brief set the type of an already declared variable

@@ -17,7 +17,8 @@ assertion
 	: Identifier EQUAL topExpression ;
 
 declaration 
-	: variableDeclaration                                         #declVariable ;
+	: variableDeclaration                                         #declVariable 
+	: constantDeclaration                                         #declConstant;
 
 annotation
         : '@' annotation_type ;
@@ -26,7 +27,10 @@ annotation_type
         : ROS_Topic LPAREN Identifier COMMA Identifier RPAREN #rosTopic;
 
 variableDeclaration
-	: Constant? ioType? domainType Identifier assignment?  ;
+	: ioType? domainType Identifier assignment?  ;
+	
+constantDeclaration
+	: Constant domainType Identifier EQUAL literal  ;
 
 assignment
 	: EQUAL literal 				#AsgnLiteral

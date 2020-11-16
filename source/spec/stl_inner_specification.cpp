@@ -55,6 +55,21 @@ void StlInnerSpecification::declare_var(const std::string& var_name, rtamt::Type
   _var_io_map.insert(std::make_pair(var_name, rtamt::StlIOType::DEFAULT));
 }
 
+void StlInnerSpecification::declare_const(const std::string& const_name, rtamt::Type type, double value) {
+  if (_specification_locked) {
+    throw StlInvalidOperationException("Specification is locked - new constant variables cannot be added.");
+  }
+
+  if ((_vars.find(const_name) != _vars.end()) || (_var_type_map.find(const_name) != _var_type_map.end())) {
+    std::stringstream ss("Constant variable ");
+    ss << const_name << " already defined.\n";
+    throw StlInvalidOperationException(ss.str());
+  }
+
+  _vars.insert(const_name);
+  _const_val_map.insert(std::make_pair(const_name, value));
+}
+
 void StlInnerSpecification::var_type(const std::string& var_name, rtamt::Type type) {
   if (_specification_locked) {
     throw StlInvalidOperationException("Specification is locked - variable type cannot be changed.");

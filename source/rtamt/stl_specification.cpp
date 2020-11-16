@@ -41,6 +41,10 @@ void StlSpecification::declare_var(const std::string& var_name, Type type) {
   _spec->declare_var(var_name, type);
 }
 
+void StlSpecification::declare_const(const std::string& const_name, Type type, double value) {
+  _spec->declare_const(const_name, type, value);
+}
+
 void StlSpecification::var_type(const std::string& var_name, Type type) {
   _spec->var_type(var_name, type);
 }
