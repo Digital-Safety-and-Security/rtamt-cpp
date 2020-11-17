@@ -288,6 +288,14 @@ public:
    * @return antlrcpp::Any
    */
   antlrcpp::Any visitIntervalTimeLiteral(grammar::StlParser::IntervalTimeLiteralContext* ctx) override;
+  
+  /**
+   * @brief Visit ConstantTimeLiteral rule
+   *
+   * @param ctx Context
+   * @return antlrcpp::Any
+   */
+  antlrcpp::Any visitConstantTimeLiteral(grammar::StlParser::ConstantTimeLiteralContext* ctx) override;
 
   /**
    * @brief Visit Interval rule

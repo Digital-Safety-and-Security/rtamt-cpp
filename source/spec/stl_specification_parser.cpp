@@ -70,7 +70,7 @@ antlrcpp::Any StlSpecificationParser::visitDeclConstant(StlParser::DeclConstantC
     throw StlParseException("Only float variables supported in this version.");
   }
   
-  double value = std::stod(constantDeclCtx->literal()->getText());
+  std::string value = constantDeclCtx->literal()->getText();
 
   _spec->declare_const(const_name, rtamt::Type::FLOAT, value);
   
@@ -88,11 +88,12 @@ antlrcpp::Any StlSpecificationParser::visitExprLiteral(grammar::StlParser::ExprL
 antlrcpp::Any StlSpecificationParser::visitExprId(grammar::StlParser::ExprIdContext* ctx) {
   antlrcpp::Any    returnVal   = visitChildren(ctx);
   std::string      name        = ctx->getText();
-  StlNode * node       = nullptr;
+  StlNode * node               = nullptr;
   if (_spec->is_var(name)) {
     node                       = new StlVariableNode(name, _spec->var_io_type(name));
   } else {
-    node                       = new StlConstantNode(_spec->const_value(name));
+    double value               = std::stod(_spec->const_value(name));
+    node                       = new StlConstantNode(value);
   }
   _root                        = node;
   return returnVal;
@@ -537,6 +538,29 @@ antlrcpp::Any StlSpecificationParser::visitExprAbs(grammar::StlParser::ExprAbsCo
 
 antlrcpp::Any StlSpecificationParser::visitIntervalTimeLiteral(grammar::StlParser::IntervalTimeLiteralContext* ctx) {
   boost::rational<uint64_t> value = str_to_rational(ctx->literal()->getText());
+
+  bound b;
+  b.value    = value;
+  b.has_unit = false;
+  b.unit     = Unit::S;
+
+  std::map<std::string, Unit> m{std::make_pair("s", Unit::S), std::make_pair("ms", Unit::MS),
+                                std::make_pair("us", Unit::US), std::make_pair("ns", Unit::NS)};
+
+  if (ctx->unit() != nullptr) {
+    b.has_unit           = true;
+    std::string unit_str = ctx->unit()->getText();
+    b.unit               = m[unit_str];
+  }
+
+  antlrcpp::Any returnVal = b;
+
+  return returnVal;
+}
+
+antlrcpp::Any StlSpecificationParser::visitConstantTimeLiteral(grammar::StlParser::ConstantTimeLiteralContext* ctx) {
+  std::string const_name = ctx->Identifier()->getText();
+  boost::rational<uint64_t> value = str_to_rational(_spec->const_value(const_name));
 
   bound b;
   b.value    = value;

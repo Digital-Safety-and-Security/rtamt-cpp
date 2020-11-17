@@ -168,9 +168,9 @@ public:
    *
    * @param const_name
    * @param type (enum Type)
-   * @param value (double)
+   * @param value (string)
    */
-  void declare_const(const std::string& const_name, Type type, double value);
+  void declare_const(const std::string& const_name, Type type, std::string value);
   
   /**
    * @brief sets the type of an already declared variable

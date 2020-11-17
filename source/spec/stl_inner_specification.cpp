@@ -55,7 +55,7 @@ void StlInnerSpecification::declare_var(const std::string& var_name, rtamt::Type
   _var_io_map.insert(std::make_pair(var_name, rtamt::StlIOType::DEFAULT));
 }
 
-void StlInnerSpecification::declare_const(const std::string& const_name, rtamt::Type type, double value) {
+void StlInnerSpecification::declare_const(const std::string& const_name, rtamt::Type type, std::string value) {
   if (_specification_locked) {
     throw StlInvalidOperationException("Specification is locked - new constant variables cannot be added.");
   }
@@ -90,12 +90,12 @@ rtamt::Type StlInnerSpecification::const_type(const std::string& const_name) {
   return _const_type_map[const_name];
 }
 
-void StlInnerSpecification::const_value(const std::string& const_name, double value) {
+void StlInnerSpecification::const_value(const std::string& const_name, std::string value) {
   if (_specification_locked) {
     throw StlInvalidOperationException("Specification is locked - constant variable value cannot be changed.");
   }
 
-  std::map<std::string, double>::iterator it = _const_val_map.find(const_name);
+  std::map<std::string, std::string>::iterator it = _const_val_map.find(const_name);
   if (it != _const_val_map.end()) {
     it->second = value;
   } else {
@@ -103,6 +103,10 @@ void StlInnerSpecification::const_value(const std::string& const_name, double va
     ss << const_name << " because it is not defined.\n";
     throw StlInvalidOperationException(ss.str());
   }
+}
+
+std::string StlInnerSpecification::const_value(const std::string& const_name) {
+  return _const_val_map[const_name];
 }
 
 bool StlInnerSpecification::is_var(const std::string& name) {
@@ -122,11 +126,6 @@ bool StlInnerSpecification::is_const(const std::string& name) {
     return false;
   }
 }
-
-double StlInnerSpecification::const_value(const std::string& const_name) {
-  return _const_val_map[const_name];
-}
-
 
 void StlInnerSpecification::var_type(const std::string& var_name, rtamt::Type type) {
   if (_specification_locked) {

@@ -13,6 +13,7 @@
 #include <set>
 #include <string>
 
+
 namespace spec {
 
 class StlInnerSpecification {
@@ -78,7 +79,7 @@ private:
    * Map const names to values
    *
    */
-  std::map<std::string, double> _const_val_map;
+  std::map<std::string, std::string> _const_val_map;
 
 
   /**
@@ -138,7 +139,7 @@ public:
    * @param type 
    * @param value
    */
-  void declare_const(const std::string& var_name, rtamt::Type type, double value);
+  void declare_const(const std::string& var_name, rtamt::Type type, std::string value);
   
   /**
    * @brief set the type of an already declared constant
@@ -162,15 +163,15 @@ public:
    * @param const_name
    * @param value
    */
-  void const_value(const std::string& const_name, double value);
+  void const_value(const std::string& const_name, std::string value);
 
   /**
    * @brief get the value of a constant variable
    *
    * @param const_name
-   * @return constant variable value (double)
+   * @return constant variable value (string)
    */
-  double const_value(const std::string& const_name);
+  std::string const_value(const std::string& const_name);
 
   /**
    * @brief set the type of an already declared variable
