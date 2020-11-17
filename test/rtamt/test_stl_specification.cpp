@@ -2461,6 +2461,7 @@ TEST_F (StlSpecificationTest, complex_constant) {
     } 
 }
 
+
 TEST_F (StlSpecificationTest, high_req_high_gnt_in_vacuity) {
     StlSpecification spec;
     
@@ -2633,3 +2634,161 @@ TEST_F (StlSpecificationTest, high_req_high_gnt_in_vacuity) {
     ASSERT_EQ(out, 3.0);
 }
 
+TEST_F (StlSpecificationTest, constant_declaration_1) {
+    StlSpecification spec;
+    spec.declare_const("c", rtamt::Type::FLOAT, "2");
+    spec.declare_var("req", rtamt::Type::FLOAT);
+    spec.declare_var("out", rtamt::Type::FLOAT);
+    spec.spec("out = once[0:1](req >= c)");
+    
+    try {
+      spec.parse();
+      
+      double out;
+    
+      out = spec.update(0, single_input_1);
+      EXPECT_EQ(98, out);
+    
+      out = spec.update(1, single_input_2);
+      EXPECT_EQ(98, out);
+    
+      out = spec.update(2, single_input_3);
+      EXPECT_EQ(-3, out);
+    
+      out = spec.update(3, single_input_4);
+      EXPECT_EQ(3, out);
+    
+      out = spec.update(4, single_input_5);
+      EXPECT_EQ(3, out);
+      
+    } catch ( StlException &e ) {
+      FAIL() << e.what();
+    } 
+}
+
+TEST_F (StlSpecificationTest, constant_declaration_2) {
+    StlSpecification spec;
+    spec.declare_const("c", rtamt::Type::FLOAT, "2.1");
+    spec.declare_var("req", rtamt::Type::FLOAT);
+    spec.declare_var("out", rtamt::Type::FLOAT);
+    spec.spec("out = once[0:1](req >= c)");
+    
+    try {
+      spec.parse();
+      
+      double out;
+    
+      out = spec.update(0, single_input_1);
+      EXPECT_EQ(97.9, out);
+    
+      out = spec.update(1, single_input_2);
+      EXPECT_EQ(97.9, out);
+    
+      out = spec.update(2, single_input_3);
+      EXPECT_EQ(-3.1, out);
+    
+      out = spec.update(3, single_input_4);
+      EXPECT_EQ(2.9, out);
+    
+      out = spec.update(4, single_input_5);
+      EXPECT_EQ(2.9, out);
+      
+    } catch ( StlException &e ) {
+      FAIL() << e.what();
+    } 
+}
+
+TEST_F (StlSpecificationTest, constant_declaration_3) {
+    StlSpecification spec;
+    spec.declare_const("c", rtamt::Type::FLOAT, "1");
+    spec.declare_var("req", rtamt::Type::FLOAT);
+    spec.declare_var("out", rtamt::Type::FLOAT);
+    spec.spec("out = once[0:c](req >= 2)");
+    
+    try {
+      spec.parse();
+      
+      double out;
+    
+      out = spec.update(0, single_input_1);
+      EXPECT_EQ(98, out);
+    
+      out = spec.update(1, single_input_2);
+      EXPECT_EQ(98, out);
+    
+      out = spec.update(2, single_input_3);
+      EXPECT_EQ(-3, out);
+    
+      out = spec.update(3, single_input_4);
+      EXPECT_EQ(3, out);
+    
+      out = spec.update(4, single_input_5);
+      EXPECT_EQ(3, out);
+      
+    } catch ( StlException &e ) {
+      FAIL() << e.what();
+    } 
+}
+
+TEST_F (StlSpecificationTest, constant_declaration_4) {
+    StlSpecification spec;
+    spec.declare_const("c", rtamt::Type::FLOAT, "1000");
+    spec.declare_var("req", rtamt::Type::FLOAT);
+    spec.declare_var("out", rtamt::Type::FLOAT);
+    spec.spec("out = once[0:c ms](req >= 2)");
+    
+    try {
+      spec.parse();
+      
+      double out;
+    
+      out = spec.update(0, single_input_1);
+      EXPECT_EQ(98, out);
+    
+      out = spec.update(1, single_input_2);
+      EXPECT_EQ(98, out);
+    
+      out = spec.update(2, single_input_3);
+      EXPECT_EQ(-3, out);
+    
+      out = spec.update(3, single_input_4);
+      EXPECT_EQ(3, out);
+    
+      out = spec.update(4, single_input_5);
+      EXPECT_EQ(3, out);
+      
+    } catch ( StlException &e ) {
+      FAIL() << e.what();
+    } 
+}
+
+TEST_F (StlSpecificationTest, constant_declaration_5) {
+    StlSpecification spec;
+    spec.declare_var("req", rtamt::Type::FLOAT);
+    spec.declare_var("out", rtamt::Type::FLOAT);
+    spec.spec("const float c = 1\nout = once[0:c](req >= 2)");
+    
+    try {
+      spec.parse();
+      
+      double out;
+    
+      out = spec.update(0, single_input_1);
+      EXPECT_EQ(98, out);
+    
+      out = spec.update(1, single_input_2);
+      EXPECT_EQ(98, out);
+    
+      out = spec.update(2, single_input_3);
+      EXPECT_EQ(-3, out);
+    
+      out = spec.update(3, single_input_4);
+      EXPECT_EQ(3, out);
+    
+      out = spec.update(4, single_input_5);
+      EXPECT_EQ(3, out);
+      
+    } catch ( StlException &e ) {
+      FAIL() << e.what();
+    } 
+}
